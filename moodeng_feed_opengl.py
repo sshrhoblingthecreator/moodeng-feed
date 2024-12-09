@@ -353,7 +353,21 @@ def update():
     target_rotation_y = -math.degrees(math.atan2(direction.x, direction.z))
     hippo.rotation_y = lerp(hippo.rotation_y, target_rotation_y, 4 * time.dt)
 
-    # ตรวจสอบการชนกับขอบเขต
+# ตรวจสอบการชนกับขอบเขต
     if hippo.x <= bound_x[0] or hippo.x >= bound_x[1]:
         direction.x *= -1
-    if hippo.z <= bound_z[0]
+    if hippo.z <= bound_z[0] or hippo.z >= bound_z[1]:
+        direction.z *= -1
+
+    # เปลี่ยนทิศทางแบบสุ่มลดความถี่
+    if random.random() < 0.005:
+        direction = Vec3(random.uniform(-1, 1), 0, random.uniform(-1, 1)).normalized()
+
+    # ฟังก์ชันนี้จะช่วยเพิ่มความสะดวกให้กับการเลื่อนเมาส์ลงและพิมพ์คำตอบในขณะที่เกมกำลังกดำเนินอยู่
+    if score >= 350:
+        print("ยินดีด้วย! คุณชนะแล้ว!")
+        destroy(hippo)  # การกำจัดหมูที่กำลังกเคลื่อนไหว
+
+
+Sky()
+app.run()
